@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LMSContentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Master_Course">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="QAOfSections">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Question" Type="varchar(max)" />
+    <Property Name="Ans1" Type="varchar(max)" />
+    <Property Name="Ans2" Type="varchar(max)" />
+    <Property Name="Ans3" Type="varchar(max)" />
+    <Property Name="SectionID" Type="varchar" MaxLength="200" />
+    <Property Name="UnitID" Type="varchar" MaxLength="200" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="SectionsOfUnit">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Section" Type="int" />
+    <Property Name="SectionName" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="UnitID" Type="int" />
+    <Property Name="CourseID" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UnitsOfCourse">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UnitID" Type="int" Nullable="false" />
+    <Property Name="UnitName" Type="varchar" MaxLength="500" />
+    <Property Name="CourseID" Type="int" />
+    <Property Name="Active" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserDetails">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="UserPassWord" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="IsActive" Type="bit" />
+  </EntityType>
+  <Association Name="FK__UnitsOfCo__Cours__6E01572D">
+    <End Role="Master_Course" Type="Self.Master_Course" Multiplicity="0..1" />
+    <End Role="UnitsOfCourse" Type="Self.UnitsOfCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Master_Course">
+        <PropertyRef Name="PK_ID" />
+      </Principal>
+      <Dependent Role="UnitsOfCourse">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="spDropTableAndConstraints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="TableName" Type="varchar" Mode="In" />
+  </Function>
+  <EntityContainer Name="LMSContentModelStoreContainer">
+    <EntitySet Name="Master_Course" EntityType="Self.Master_Course" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="QAOfSections" EntityType="Self.QAOfSections" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SectionsOfUnit" EntityType="Self.SectionsOfUnit" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UnitsOfCourse" EntityType="Self.UnitsOfCourse" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__UnitsOfCo__Cours__6E01572D" Association="Self.FK__UnitsOfCo__Cours__6E01572D">
+      <End Role="Master_Course" EntitySet="Master_Course" />
+      <End Role="UnitsOfCourse" EntitySet="UnitsOfCourse" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

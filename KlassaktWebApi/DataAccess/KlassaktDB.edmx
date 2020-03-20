@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="LMSContentModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Master_Course">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="QAOfSections">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question" Type="varchar(max)" />
+          <Property Name="Ans1" Type="varchar(max)" />
+          <Property Name="Ans2" Type="varchar(max)" />
+          <Property Name="Ans3" Type="varchar(max)" />
+          <Property Name="SectionID" Type="varchar" MaxLength="200" />
+          <Property Name="UnitID" Type="varchar" MaxLength="200" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="SectionsOfUnit">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Section" Type="int" />
+          <Property Name="SectionName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="UnitID" Type="int" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="UnitsOfCourse">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UnitID" Type="int" Nullable="false" />
+          <Property Name="UnitName" Type="varchar" MaxLength="500" />
+          <Property Name="CourseID" Type="int" />
+          <Property Name="Active" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserDetails">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="UserPassWord" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <Association Name="FK__UnitsOfCo__Cours__6E01572D">
+          <End Role="Master_Course" Type="Self.Master_Course" Multiplicity="0..1" />
+          <End Role="UnitsOfCourse" Type="Self.UnitsOfCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master_Course">
+              <PropertyRef Name="PK_ID" />
+            </Principal>
+            <Dependent Role="UnitsOfCourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="spDropTableAndConstraints" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="TableName" Type="varchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="LMSContentModelStoreContainer">
+          <EntitySet Name="Master_Course" EntityType="Self.Master_Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="QAOfSections" EntityType="Self.QAOfSections" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SectionsOfUnit" EntityType="Self.SectionsOfUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UnitsOfCourse" EntityType="Self.UnitsOfCourse" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetails" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__UnitsOfCo__Cours__6E01572D" Association="Self.FK__UnitsOfCo__Cours__6E01572D">
+            <End Role="Master_Course" EntitySet="Master_Course" />
+            <End Role="UnitsOfCourse" EntitySet="UnitsOfCourse" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LMSContentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Master_Course">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="UnitsOfCourses" Relationship="Self.FK__UnitsOfCo__Cours__6E01572D" FromRole="Master_Course" ToRole="UnitsOfCourse" />
+        </EntityType>
+        <EntityType Name="QAOfSection">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ans1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ans2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ans3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SectionID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="UnitID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="SectionsOfUnit">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Section" Type="Int32" />
+          <Property Name="SectionName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UnitID" Type="Int32" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UnitsOfCourse">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UnitID" Type="Int32" Nullable="false" />
+          <Property Name="UnitName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CourseID" Type="Int32" />
+          <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Master_Course" Relationship="Self.FK__UnitsOfCo__Cours__6E01572D" FromRole="UnitsOfCourse" ToRole="Master_Course" />
+        </EntityType>
+        <EntityType Name="UserDetail">
+          <Key>
+            <PropertyRef Name="PK_ID" />
+          </Key>
+          <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="UserPassWord" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK__UnitsOfCo__Cours__6E01572D">
+          <End Role="Master_Course" Type="Self.Master_Course" Multiplicity="0..1" />
+          <End Role="UnitsOfCourse" Type="Self.UnitsOfCourse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master_Course">
+              <PropertyRef Name="PK_ID" />
+            </Principal>
+            <Dependent Role="UnitsOfCourse">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LMSContentEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Master_Course" EntityType="Self.Master_Course" />
+          <EntitySet Name="QAOfSections" EntityType="Self.QAOfSection" />
+          <EntitySet Name="SectionsOfUnits" EntityType="Self.SectionsOfUnit" />
+          <EntitySet Name="UnitsOfCourses" EntityType="Self.UnitsOfCourse" />
+          <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+          <AssociationSet Name="FK__UnitsOfCo__Cours__6E01572D" Association="Self.FK__UnitsOfCo__Cours__6E01572D">
+            <End Role="Master_Course" EntitySet="Master_Course" />
+            <End Role="UnitsOfCourse" EntitySet="UnitsOfCourses" />
+          </AssociationSet>
+          <FunctionImport Name="spDropTableAndConstraints">
+            <Parameter Name="TableName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LMSContentModelStoreContainer" CdmEntityContainer="LMSContentEntities">
+          <EntitySetMapping Name="Master_Course">
+            <EntityTypeMapping TypeName="LMSContentModel.Master_Course">
+              <MappingFragment StoreEntitySet="Master_Course">
+                <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="QAOfSections">
+            <EntityTypeMapping TypeName="LMSContentModel.QAOfSection">
+              <MappingFragment StoreEntitySet="QAOfSections">
+                <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+                <ScalarProperty Name="Question" ColumnName="Question" />
+                <ScalarProperty Name="Ans1" ColumnName="Ans1" />
+                <ScalarProperty Name="Ans2" ColumnName="Ans2" />
+                <ScalarProperty Name="Ans3" ColumnName="Ans3" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SectionsOfUnits">
+            <EntityTypeMapping TypeName="LMSContentModel.SectionsOfUnit">
+              <MappingFragment StoreEntitySet="SectionsOfUnit">
+                <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+                <ScalarProperty Name="Section" ColumnName="Section" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UnitsOfCourses">
+            <EntityTypeMapping TypeName="LMSContentModel.UnitsOfCourse">
+              <MappingFragment StoreEntitySet="UnitsOfCourse">
+                <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+                <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="Active" ColumnName="Active" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserDetails">
+            <EntityTypeMapping TypeName="LMSContentModel.UserDetail">
+              <MappingFragment StoreEntitySet="UserDetails">
+                <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserPassWord" ColumnName="UserPassWord" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="spDropTableAndConstraints" FunctionName="LMSContentModel.Store.spDropTableAndConstraints" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

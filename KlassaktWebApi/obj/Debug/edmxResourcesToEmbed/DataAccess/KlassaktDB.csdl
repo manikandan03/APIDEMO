@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="LMSContentModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Master_Course">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CourseName" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Active" Type="Boolean" />
+    <NavigationProperty Name="UnitsOfCourses" Relationship="Self.FK__UnitsOfCo__Cours__6E01572D" FromRole="Master_Course" ToRole="UnitsOfCourse" />
+  </EntityType>
+  <EntityType Name="QAOfSection">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ans1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ans2" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Ans3" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="SectionID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="UnitID" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="SectionsOfUnit">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Section" Type="Int32" />
+    <Property Name="SectionName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UnitID" Type="Int32" />
+    <Property Name="CourseID" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+  </EntityType>
+  <EntityType Name="UnitsOfCourse">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UnitID" Type="Int32" Nullable="false" />
+    <Property Name="UnitName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CourseID" Type="Int32" />
+    <Property Name="Active" Type="Boolean" />
+    <NavigationProperty Name="Master_Course" Relationship="Self.FK__UnitsOfCo__Cours__6E01572D" FromRole="UnitsOfCourse" ToRole="Master_Course" />
+  </EntityType>
+  <EntityType Name="UserDetail">
+    <Key>
+      <PropertyRef Name="PK_ID" />
+    </Key>
+    <Property Name="PK_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="UserPassWord" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="IsActive" Type="Boolean" />
+  </EntityType>
+  <Association Name="FK__UnitsOfCo__Cours__6E01572D">
+    <End Role="Master_Course" Type="Self.Master_Course" Multiplicity="0..1" />
+    <End Role="UnitsOfCourse" Type="Self.UnitsOfCourse" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Master_Course">
+        <PropertyRef Name="PK_ID" />
+      </Principal>
+      <Dependent Role="UnitsOfCourse">
+        <PropertyRef Name="CourseID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="LMSContentEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Master_Course" EntityType="Self.Master_Course" />
+    <EntitySet Name="QAOfSections" EntityType="Self.QAOfSection" />
+    <EntitySet Name="SectionsOfUnits" EntityType="Self.SectionsOfUnit" />
+    <EntitySet Name="UnitsOfCourses" EntityType="Self.UnitsOfCourse" />
+    <EntitySet Name="UserDetails" EntityType="Self.UserDetail" />
+    <AssociationSet Name="FK__UnitsOfCo__Cours__6E01572D" Association="Self.FK__UnitsOfCo__Cours__6E01572D">
+      <End Role="Master_Course" EntitySet="Master_Course" />
+      <End Role="UnitsOfCourse" EntitySet="UnitsOfCourses" />
+    </AssociationSet>
+    <FunctionImport Name="spDropTableAndConstraints">
+      <Parameter Name="TableName" Mode="In" Type="String" />
+    </FunctionImport>
+  </EntityContainer>
+</Schema>

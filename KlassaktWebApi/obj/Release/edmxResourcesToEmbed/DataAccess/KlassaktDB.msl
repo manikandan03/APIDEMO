@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="LMSContentModelStoreContainer" CdmEntityContainer="LMSContentEntities">
+    <EntitySetMapping Name="Master_Course">
+      <EntityTypeMapping TypeName="LMSContentModel.Master_Course">
+        <MappingFragment StoreEntitySet="Master_Course">
+          <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="QAOfSections">
+      <EntityTypeMapping TypeName="LMSContentModel.QAOfSection">
+        <MappingFragment StoreEntitySet="QAOfSections">
+          <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="Ans1" ColumnName="Ans1" />
+          <ScalarProperty Name="Ans2" ColumnName="Ans2" />
+          <ScalarProperty Name="Ans3" ColumnName="Ans3" />
+          <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SectionsOfUnits">
+      <EntityTypeMapping TypeName="LMSContentModel.SectionsOfUnit">
+        <MappingFragment StoreEntitySet="SectionsOfUnit">
+          <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+          <ScalarProperty Name="Section" ColumnName="Section" />
+          <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UnitsOfCourses">
+      <EntityTypeMapping TypeName="LMSContentModel.UnitsOfCourse">
+        <MappingFragment StoreEntitySet="UnitsOfCourse">
+          <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+          <ScalarProperty Name="UnitID" ColumnName="UnitID" />
+          <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+          <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserDetails">
+      <EntityTypeMapping TypeName="LMSContentModel.UserDetail">
+        <MappingFragment StoreEntitySet="UserDetails">
+          <ScalarProperty Name="PK_ID" ColumnName="PK_ID" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserPassWord" ColumnName="UserPassWord" />
+          <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="spDropTableAndConstraints" FunctionName="LMSContentModel.Store.spDropTableAndConstraints" />
+  </EntityContainerMapping>
+</Mapping>
