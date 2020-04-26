@@ -9,5 +9,6 @@ namespace KlassaktWebApi.Models
         public int PK_ID { get; set; }
         public string CourseName { get; set; }
         public Nullable<bool> Active { get; set; }
+
     }
 }
